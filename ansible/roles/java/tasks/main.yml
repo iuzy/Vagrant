@@ -1,0 +1,22 @@
+- name: Clone a repository
+  git:
+    repo: git@github.com:R-Alisa/HelloWorld.git
+    dest: /home/girls/compile-java/
+    accept_hostkey: yes
+    key_file: /home/girls/.ssh/key
+  become_user: girls
+
+
+- name: compile java
+  shell: javac /home/girls/compile-java/src/com/company/Main.java
+  become_user: girls
+
+
+- name: Run java application
+  shell: java Main
+  register: out
+  become_user: girls
+  args:
+    chdir: /home/girls/compile-java/src/com/company
+
+- debug: var=out.stdout_lines

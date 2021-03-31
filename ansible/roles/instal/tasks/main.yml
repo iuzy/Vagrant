@@ -1,0 +1,21 @@
+---
+- name: install some application on Centos
+  package:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - git
+    - jre
+
+
+- name: install OpenJDK 11 JRE
+  package:
+    name: java-11-openjdk
+    state: present
+    update_cache: yes
+
+- name: install java - devel
+  package:
+    name: java-1.7.0-openjdk-devel
+    state: present
+    update_cache: yes

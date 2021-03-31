@@ -1,0 +1,36 @@
+- name: Add the user 'girls'
+  ansible.builtin.user:
+    name: girls
+    groups: wheel
+    append: yes
+    state: present
+
+
+- name: Creating ssh directory
+  file:
+    path: /home/girls/.ssh
+    state: directory
+    owner: girls
+    group: girls
+    mode: '0700'
+
+- name: Copy key 1
+  copy:
+    src: key
+    dest: /home/girls/.ssh
+    owner: girls
+    group: girls
+    mode: '0600'
+
+- name: Copy key 2
+  copy:
+    src: key.pub
+    dest: /home/girls/.ssh
+    owner: girls
+    group: girls
+    mode: '0644'
+
+
+- name: Add key to ssh-agent
+  shell: eval $(ssh-agent) && ssh-add /home/girls/.ssh/key
+  become_user: girls

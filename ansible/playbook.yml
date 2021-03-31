@@ -1,0 +1,6 @@
+- hosts: monitoring
+  become: true
+  roles:
+    - instal
+    - users
+    - java
